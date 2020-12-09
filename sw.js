@@ -3,8 +3,8 @@
 importScripts("./js/sw-utils.js");
 
 // Nombre de los caches
-const STATIC_CACHE = "static-v3";
-const DYNAMIC_CACHE = "dynamic-v1";
+const STATIC_CACHE = "static-v4";
+const DYNAMIC_CACHE = "dynamic-v2";
 const INMUTABLE_CACHE = "inmutable-v1";
 
 // Cache estático - App Shell - Todo lo "fijo" hecho por el desarrollador
@@ -57,7 +57,13 @@ self.addEventListener("activate", e=> {
 
 		// Borrado de los caches cuyo nombre no coincida con el valor de la constante CACHE_STATIC y contengan el string "static"
 		keys.forEach(key => {
+
 			if (key !== STATIC_CACHE && key.includes("static")) {
+				return caches.delete(key);
+			}
+
+			// Video 82
+			if (key !== DYNAMIC_CACHE && key.includes("dynamic")) {
 				return caches.delete(key);
 			}
 		});
